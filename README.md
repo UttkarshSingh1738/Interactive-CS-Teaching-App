@@ -1,115 +1,165 @@
-# Multiuser Chatroom Application
+# Interactive CS Teaching App
 
-![Chatroom](https://img.shields.io/badge/Chatroom-Java_Play_React-blue.svg)
-![MySQL](https://img.shields.io/badge/MySQL-8.0-blue.svg)
-![React](https://img.shields.io/badge/React-Latest-blue.svg)
-![sbt](https://img.shields.io/badge/sbt-1.1+-blue.svg)
-![Java](https://img.shields.io/badge/Java-11+-blue.svg)
+An interactive full-stack web application that combines a multiuser chatroom with engaging computer science quizzes. This app lets users challenge themselves with quizzes on topics like binary addition and logic gates, track their performance via a leaderboard and detailed statistics, and chat with other users in real time.
 
-## Project Overview
+## Features
 
-This project is a full-stack multiuser chatroom application built using the **Java Play Framework** for the backend and **React.js** for the frontend. It uses a **MySQL** database for data storage. The application allows multiple users to register, log in, and chat in real-time.
+- **Interactive Quizzes:**  
+  - Multiple quiz types including binary arithmetic and logic gates.  
+  - Real-time feedback on quiz answers.  
+  - Response time is measured from when the question is displayed to when an answer is submitted.
 
-## Tools and Technologies
+- **Leaderboard:**  
+  - Aggregates quiz attempts and calculates accuracy percentage (correct attempts / total attempts).  
+  - Ranks users by their overall quiz accuracy.
 
-### Backend
-- **Java Play Framework**: 3.0.3
-- **MySQL**: 8
-- **sbt**: 1.1
-- **Scala**: Compatible with cross versions 2.13.14 and 3.3.3
+- **Statistics Dashboard:**  
+  - Displays overall stats: total attempts, correct attempts, average duration, and overall accuracy.  
+  - Provides a breakdown by quiz type.  
+  - Shows a timeline graph of quiz attempts and correct answers per day (using a line chart).
 
-### Frontend
-- **React.js**: Latest version (as of June 2024)
+- **Chatroom:**  
+  - Multiuser real-time chat functionality.  
+  - Seamless integration with the quiz feature—users can switch between quizzing and chatting.
 
-## Project Setup and Usage
+- **User Authentication:**  
+  - Secure login and registration using JWT-based authentication.  
+  - Protected endpoints for quiz and chat functionalities.
+
+## Technologies
+
+- **Backend:**  
+  - Java Play Framework  
+  - MySQL (for data persistence)  
+  - Ebean ORM for database operations  
+  - JWT for authentication
+
+- **Frontend:**  
+  - React.js  
+  - React Router for navigation  
+  - Axios for API calls  
+  - Bootstrap for styling  
+  - react-chartjs-2 and Chart.js for data visualization
+
+## Installation
 
 ### Prerequisites
-- **Java**: JDK 11 or higher
-- **Node.js**: Latest LTS version
-- **MySQL**: Version 8
-- **sbt**: Version 1.1 or higher
 
-### Clone the Repository
-```bash
-git clone https://github.com/UttkarshSingh1738/Chatroom-Java-Play-MySQL-React.git
-cd Chatroom-Java-Play-MySQL-React
-```
+- **Java JDK 11** (or higher)
+- **Node.js** (latest LTS version)
+- **MySQL** (version 8)
+- **sbt** (Scala Build Tool, version 1.1+)
 
 ### Backend Setup
 
-**Database Configuration**:
-   Configure your MySQL database in the `application.conf` file located in the `conf/` directory:
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/yourusername/Interactive-CS-Teaching-App.git
+   cd Interactive-CS-Teaching-App
+   ```
+
+2. **Configure MySQL:**
+
+   Update the application.conf file in the conf/ directory with your MySQL credentials:
+
    ```conf
    db.default.driver=com.mysql.cj.jdbc.Driver
-   db.default.url="jdbc:mysql://localhost:3306/chatdb"
-   db.default.username="yourusername"
-   db.default.password="yourpassword"
-```
+   db.default.url="jdbc:mysql://localhost:3306/yourdatabase"
+   db.default.username=yourusername
+   db.default.password=yourpassword
+   ```
+
+3. **Apply Evolutions:**
+
+   Start the Play application with:
+
+   ```bash
+   sbt run
+   ```
+
+   Then, follow the prompts in your browser to apply the evolution scripts that create the required tables (people, chat, quiz_attempt).
+
+4. **Run the Backend:**
+
+   The backend will be available at http://localhost:9000.
 
 ### Frontend Setup
 
-1. **Navigate to the Frontend Directory:**:
-```bash
-cd frontend
-```
-2. **Install Dependencies**:
-```bash
-npm install
-```
+1. Navigate to the frontend directory and install dependencies:
 
-### Proxy Configuration
-The React development server is configured to proxy API requests to the Play Framework backend running on port 9000. This is set up in the package.json file of the React project:
+   ```bash
+   cd frontend
+   npm install
+   ```
 
-```json
-{
-  "proxy": "http://localhost:9000",
-  ...
-}
-```
-## Application Usage
+2. **Run the React development server:**
 
-### Access the Application
-- Open your browser and navigate to `http://localhost:3000`. This will load the React frontend.
+   ```bash
+   npm start
+   ```
 
-### Backend API
-- The backend runs on `http://localhost:9000` in the background, handling API requests.
+   The frontend will be available at http://localhost:3000.
 
-## Application Features
+   Make sure your package.json includes a proxy configuration to forward API calls to the backend:
 
-- **User Registration**: New users can register by providing a username and password.
-- **User Login**: Registered users can log in with their credentials.
-- **Chat Functionality**: Logged-in users can send and receive messages in real-time.
+   ```json
+   "proxy": "http://localhost:9000"
+   ```
 
-## Development Notes
+## Usage
 
-### Run Backend and Frontend Concurrently
-- Use `sbt run` to start the Play Framework backend. The frontend is served via React's development server on port 3000, with API requests proxied to the backend running on port 9000.
+- **Register / Login:**
 
-### Database Migrations
-- Ensure MySQL is running and configured correctly in `application.conf`. Use the Play Framework's migration tool to apply any database changes.
+  Open the app in your browser.  
+  Register a new account or log in with your credentials.  
+  Successful authentication redirects you to the Quiz page.
 
-## Dependencies
+- **Quiz:**
 
-### Backend (Play Framework)
-- `play-ebean`
-- `mysql-connector-java`
-- `play-json`
-- `play-i18n`
-- `play-guice`
+  The Quiz page presents interactive questions (binary addition or logic gate problems).  
+  Response time is measured and recorded.  
+  Immediate feedback is provided after submitting your answer.  
+  Your quiz attempts are recorded for leaderboard ranking and statistics.
 
-### Frontend (React.js)
-- `react`
-- `react-dom`
-- `react-scripts`
+- **Leaderboard & Stats:**
+
+  The Leaderboard page displays user rankings based on accuracy percentage.  
+  The Stats page shows overall performance, a breakdown by quiz type, and a timeline chart visualizing daily quiz activity.
+
+- **Chatroom:**
+
+  The Chatroom provides real-time multiuser chat functionality.  
+  Users can switch between the quiz interface and the chatroom seamlessly.
+
+## API Endpoints
+
+- **User Authentication:**
+
+  - POST /api/authenticate – Authenticates a user and returns a JWT token.
+  - POST /api/save – Registers a new user.
+
+- **Chat:**
+
+  - GET /api/chatroom – Retrieves all chat messages.
+  - POST /api/chatroom/send – Sends a new chat message.
+  - Additional endpoints for updating and deleting messages.
+
+- **Quiz:**
+
+  - GET /quiz/question – Generates a new quiz question.
+  - POST /quiz/attempt – Submits a quiz attempt.
+  - GET /quiz/leaderboard – Retrieves leaderboard data.
+  - GET /quiz/stats – Retrieves detailed quiz statistics.
 
 ## Future Improvements
 
-- **Real-time Notifications**: Implement real-time notifications using WebSockets.
-- **User Profiles**: Add functionality for user profiles with custom avatars.
-- **Message History**: Implement message history with pagination.
+- **Additional Quiz Types:**
 
-## Contributing
+  Expand quizzes to include topics like data structures, algorithms, and other CS subjects.
 
-Feel free to submit issues or pull requests. For major changes, please open an issue first to discuss what you would like to change.
 
+- **Scalability & Optimization:**
+
+  Optimize backend aggregation queries for handling large datasets efficiently.
 
