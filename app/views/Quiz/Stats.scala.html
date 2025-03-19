@@ -1,0 +1,12 @@
+@import play.mvc.Http.Request
+@(userStats: services.QuizService.UserStats, username: String)
+  (implicit request: Request, messages: play.i18n.Messages)
+
+@layout("Your Stats") {
+    <div class="container">
+        <h1>Your Quiz Statistics</h1>
+        <p>Total Attempts: @userStats.totalAttempts</p>
+        <p>Correct Attempts: @userStats.correctAttempts</p>
+        <p>Average Duration: @userStats.averageDuration seconds</p>
+    </div>
+}(username)

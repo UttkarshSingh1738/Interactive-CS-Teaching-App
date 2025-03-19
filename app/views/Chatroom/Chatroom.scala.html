@@ -1,0 +1,43 @@
+@import java.time.ZoneId
+@import java.time.format.DateTimeFormatter
+
+@(username: String)(messages : java.util.List[Chat])
+
+@layout("Simple Chatroom"){
+    <div class="container mt-5">
+        <div class="text-center mb-4">
+            <h1 class="display-4">Welcome to the Chatroom @username!</h1>
+        </div>
+        <div class="chat-container">
+            <div class="chat-box card p-3 mb-4" id="chat-box">
+            @for(message <- messages) {
+                @defining(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault())) { formatter =>
+                    <div class="chat-message mb-2" id="message-@message.id">
+                        <strong>@message.user.username</strong>: <span class="message-text">@message.message</span> <em>@formatter.format(message.updatedTime)</em>
+                        @if(message.user.username == username) {
+                            <div class="actions">
+                                <button class="btn btn-sm btn-warning" onclick="editMessage(@message.id)">Edit</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteMessage(@message.id)">Delete</button>
+                            </div>
+                        }
+                    </div>
+                }
+            }
+            </div>
+            <div class="input-group mb-4">
+                <input type="text" class="form-control" id="chat-input" placeholder="Type a message...">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <form action="@routes.ChatroomController.userMessages()" method="GET" class="mt-4">
+                <button type="submit" class="btn btn-info">View My Messages</button>
+            </form>
+        </div>
+        <form action="@routes.HomeController.logout()" method="GET" class="mt-4">
+            <button type="submit" class="btn btn-secondary">Logout</button>
+        </form>
+    </div>
+}(username)

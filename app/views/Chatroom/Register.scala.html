@@ -1,0 +1,24 @@
+@import helper._
+@import play.mvc.Http.Request
+
+@(userForm : Form[People])(implicit request: Request, messages: play.i18n.Messages)
+
+@layout("Register"){
+        <div class="container">
+            <div class="text-center mt-5 mb-4">
+                <h1 class="display-4">Register</h1>
+            </div>
+            @form(action = routes.HomeController.save(), 'class -> "form-horizontal pb-4") {
+                <div class="form-group">
+                @inputText(userForm("username"), '_label -> "Username", 'class -> "form-control")
+                </div>
+                <div class="form-group">
+                @inputText(userForm("password"), '_label -> "Password", 'class -> "form-control")
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Register" class="btn btn-primary">
+                </div>
+            }
+            <p>Already have an account? <a href="@routes.HomeController.index()">Login here</a>.</p>
+        </div>
+}("")

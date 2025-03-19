@@ -1,0 +1,27 @@
+@import java.time.ZoneId
+@import java.time.format.DateTimeFormatter
+@(username: String)(messages: java.util.List[Chat])
+@layout("My Messages"){
+        <div class="container mt-5">
+            <div class="text-center mb-4">
+                <h1 class="display-4">My Messages</h1>
+            </div>
+            <div class="chat-container">
+                <div class="chat-box card p-3 mb-4" id="chat-box">
+                @for(message <- messages) {
+                    @defining(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault())) { formatter =>
+                        <div class="chat-message mb-2" id="message-@message.id">
+                            <strong>@message.user.username</strong>: <span class="message-text">@message.message</span> <em>@formatter.format(message.updatedTime)</em>
+                            <div class="actions">
+                                <button class="btn btn-sm btn-warning" onclick="editMessage(@message.id)">Edit</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteMessage(@message.id)">Delete</button>
+                            </div>
+                        </div>
+                    }
+                }
+                </div>
+                <div class="text-center mt-4">
+                    <a href="@routes.ChatroomController.index()" class="btn btn-secondary">Back to Chatroom</a>
+                </div>
+            </div>
+        </div>}(username)

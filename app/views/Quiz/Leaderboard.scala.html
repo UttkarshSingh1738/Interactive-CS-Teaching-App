@@ -1,0 +1,25 @@
+@import play.mvc.Http.Request
+@(leaderboard: List[services.QuizService.LeaderboardEntry], username: String)
+  (implicit request: Request, messages: play.i18n.Messages)
+
+@layout("Leaderboard") {
+    <div class="container">
+        <h1>Quiz Leaderboard</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+            @for(entry <- leaderboard) {
+                <tr>
+                    <td>@entry.username</td>
+                    <td>@entry.score</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}(username)

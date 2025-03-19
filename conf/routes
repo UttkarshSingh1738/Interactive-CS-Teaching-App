@@ -1,0 +1,36 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+GET     /                               controllers.HomeController.index()
++nocsrf
+GET     /register                       controllers.HomeController.register()
++nocsrf
+POST    /api/save                       controllers.HomeController.save(request: Request)
++nocsrf
+POST    /api/authenticate               controllers.HomeController.authenticate(request: Request)
++nocsrf
+GET     /api/logout                     controllers.HomeController.logout(request: Request)
++nocsrf
+GET     /api/chatroom                   controllers.ChatroomController.index(request: Request)
++nocsrf
+POST    /api/chatroom/send              controllers.ChatroomController.send(request: Request)
++nocsrf
+POST    /api/chatroom/update            controllers.ChatroomController.update(request: Request)
++nocsrf
+POST    /api/chatroom/delete            controllers.ChatroomController.destroy(request: Request)
++nocsrf
+POST    /api/chatroom/userMessages      controllers.ChatroomController.userMessages(request: Request)
+
+# Quiz Endpoints
++nocsrf
+GET     /quiz/question         controllers.QuizController.getQuestion(request: Request)
++nocsrf
+POST    /quiz/attempt          controllers.QuizController.submitAttempt(request: Request)
++nocsrf
+GET     /quiz/leaderboard      controllers.QuizController.getLeaderboard(request: Request)
++nocsrf
+GET     /quiz/stats            controllers.QuizController.getUserStats(request: Request)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(file)

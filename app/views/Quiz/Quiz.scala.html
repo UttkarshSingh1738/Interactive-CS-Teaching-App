@@ -1,0 +1,43 @@
+@import play.mvc.Http.Request
+@(quizQuestion: String, username: String)
+  (implicit request: Request, messages: play.i18n.Messages)
+
+@layout("Quiz") {
+    <div class="container">
+        <h1>Binary Quiz</h1>
+        <div id="quiz-question">
+            <p>@quizQuestion</p>
+        </div>
+        <div class="form-group">
+            <label for="quiz-answer">Your Answer:</label>
+            <input type="text" class="form-control" id="quiz-answer" placeholder="Enter your answer" />
+        </div>
+        <button class="btn btn-primary" onclick="submitQuiz()">Submit</button>
+    </div>
+    
+    <script type="text/javascript">
+        function submitQuiz() {
+            var answer = document.getElementById("quiz-answer").value;
+            var data = {
+                quizType: "binary-addition",
+                question: document.querySelector("#quiz-question p").innerText,
+                userAnswer: answer,
+                correctAnswer: "",
+                duration: 5
+            };
+            fetch("/quiz/attempt", {
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`  // Include the token here!
+                },
+                body: JSON.stringify(data)
+            })
+            .then(function(response) { return response.json(); })
+            .then(function(result) {
+                alert("Your answer is " + (result.isCorrect ? "correct!" : "incorrect."));
+            })
+            .catch(function(error) { console.error("Error:", error); });
+        }
+    </script>
+}(username)

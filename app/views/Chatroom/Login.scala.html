@@ -1,0 +1,30 @@
+@import helper._
+@import play.mvc.Http.Request
+
+@(userForm : Form[People])(users : java.util.List[People])(implicit request: Request, messages: play.i18n.Messages)
+@layout("Login Page"){
+        <div class="container">
+            <div class="text-center mt-5 mb-4">
+                <h1 class="display-4">Login</h1>
+            </div>
+            @form(action = routes.HomeController.authenticate(), 'class -> "form-horizontal pb-4") {
+                <div class="form-group">
+                @inputText(userForm("username"), '_label -> "Username", 'class -> "form-control")
+                </div>
+                <div class="form-group">
+                @inputPassword(userForm("password"), '_label -> "Password", 'class -> "form-control")
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Login" class="btn btn-primary">
+                </div>
+            }
+
+            <h2>Registered Users</h2>
+            <ul class="list-group">
+            @for(user <- users) {
+                <li class="list-group-item">@user.username</li>
+            }
+            </ul>
+
+            <p>Don't have an account? <a href="@routes.HomeController.register()">Register here</a>.</p>
+        </div>}("")
